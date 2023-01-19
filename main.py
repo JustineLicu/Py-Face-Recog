@@ -44,7 +44,6 @@ class App(ct.CTk):
         self.cmd_exit = ct.CTkButton(master=self, text="Exit", command=self.exit_app)
         self.cmd_exit.grid(row=4, column=0, pady=5, padx=20, sticky="w")
 
-        self.cam_active = False
         self.camerabtn_switch(False)
         self.btn_switch(self.cmd_save, stat=False)
         self.btn_switch(self.cmd_retake, stat=False)
@@ -53,7 +52,6 @@ class App(ct.CTk):
         sid(self)
 
     def open_camera(self):
-        self.cam_active = True
         self.camerabtn_switch(True)
 
         self.cap = cv2.VideoCapture(0)
@@ -65,12 +63,12 @@ class App(ct.CTk):
         imgtk = ImageTk.PhotoImage(image=self.prevImg)
         self.img_holder.imgtk = imgtk
         self.img_holder.configure(image=imgtk)
+        self.img_holder.after(10, self.show_frame)
 
         # if cv2.waitKey(1) & 0xFF == ord("c"):
         #     break
 
     def capture(self):
-        self.cam_active = False
         self.btn_switch(self.cmd_camera, stat=False)
         self.btn_switch(self.cmd_save, stat=True)
         self.btn_switch(self.cmd_retake, stat=True)
@@ -117,6 +115,16 @@ class App(ct.CTk):
             btn.configure(state="disabled")
         else:
             btn.configure(state="normal")
+
+    def show_frame(self):
+        _, frame = self.cap.read()
+        cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
+
+        self.prevImg = Image.fromarray(cv2image)
+        imgtk = ImageTk.PhotoImage(image=self.prevImg)
+        self.img_holder.imgtk = imgtk
+        self.img_holder.configure(image=imgtk)
+        self.img_holder.after(10, self.show_frame)
 
 
 if __name__ == "__main__":
