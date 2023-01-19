@@ -83,7 +83,8 @@ class App(ct.CTk):
     def save_img(self):
         success, frame = self.cap.read()
         cv2.imwrite(
-            BASE_DIR + "\\ImageList\\" + self.txt_imgfname.get() + ".png", frame
+            BASE_DIR + "\\ImageList\\" + self.txt_imgfname.get() + ".png",
+            self.last_frame,
         )
 
         self.img_holder.imgtk = None
@@ -128,6 +129,7 @@ class App(ct.CTk):
         _, frame = self.cap.read()
         cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
 
+        self.last_frame = frame
         self.prevImg = Image.fromarray(cv2image)
         imgtk = ImageTk.PhotoImage(image=self.prevImg)
         self.img_holder.imgtk = imgtk
