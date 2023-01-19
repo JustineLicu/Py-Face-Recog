@@ -1,7 +1,4 @@
 import cv2
-import numpy as np
-import face_recognition as fr
-import tkinter as tk
 import customtkinter as ct
 from PIL import Image, ImageTk
 from start_id import sid
@@ -50,7 +47,7 @@ class App(ct.CTk):
         self.btn_switch(self.cmd_retake, stat=False)
 
     def start_id(self):
-        sid(self)
+        sid()
 
     def open_camera(self):
         self.cancel = False
@@ -58,7 +55,7 @@ class App(ct.CTk):
 
         self.cap = cv2.VideoCapture(0)
 
-        success, frame = self.cap.read()
+        _, frame = self.cap.read()
         cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
 
         self.prevImg = Image.fromarray(cv2image)
@@ -81,7 +78,6 @@ class App(ct.CTk):
         self.txt_imgfname.grid(row=5, column=0, pady=5, padx=20, sticky="w")
 
     def save_img(self):
-        success, frame = self.cap.read()
         cv2.imwrite(
             BASE_DIR + "\\ImageList\\" + self.txt_imgfname.get() + ".png",
             self.last_frame,

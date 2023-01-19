@@ -6,7 +6,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
-def sid(self):
+def sid():
     path = BASE_DIR + "\ImageList"
     images = []
     classNames = []
@@ -57,7 +57,7 @@ def sid(self):
                     img,
                     name,
                     (x1 + 6, y2 - 6),
-                    cv2.FONT_HERSHEY_SCRIPT_COMPLEX,
+                    cv2.FONT_HERSHEY_COMPLEX,
                     0.65,
                     (255, 0, 0),
                     2,
