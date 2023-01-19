@@ -9,7 +9,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-ct.set_appearance_mode("Light")
+ct.set_appearance_mode("Dark")
 
 
 class App(ct.CTk):
