@@ -86,16 +86,21 @@ class App(ct.CTk):
             BASE_DIR + "\\ImageList\\" + self.txt_imgfname.get() + ".png", frame
         )
 
+        self.img_holder.configure(image=None)
         self.txt_imgfname.destroy()
         self.camerabtn_switch(False)
         self.btn_switch(self.cmd_save, stat=False)
         self.btn_switch(self.cmd_retake, stat=False)
 
     def retake(self):
+        self.cancel = False
+
         self.txt_imgfname.destroy()
         self.btn_switch(self.cmd_camera, stat=True)
         self.btn_switch(self.cmd_save, stat=False)
         self.btn_switch(self.cmd_retake, stat=False)
+
+        self.img_holder.after(10, self.show_frame)
 
     def exit_app(self):
         self.quit()
