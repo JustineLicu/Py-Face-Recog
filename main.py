@@ -86,6 +86,7 @@ class App(ct.CTk):
             BASE_DIR + "\\ImageList\\" + self.txt_imgfname.get() + ".png", frame
         )
 
+        self.img_holder.imgtk = None
         self.img_holder.configure(image=None)
         self.txt_imgfname.destroy()
         self.camerabtn_switch(False)
