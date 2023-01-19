@@ -44,6 +44,7 @@ class App(ct.CTk):
         self.cmd_exit = ct.CTkButton(master=self, text="Exit", command=self.exit_app)
         self.cmd_exit.grid(row=4, column=0, pady=5, padx=20, sticky="w")
 
+        self.cancel = False
         self.camerabtn_switch(False)
         self.btn_switch(self.cmd_save, stat=False)
         self.btn_switch(self.cmd_retake, stat=False)
@@ -52,6 +53,7 @@ class App(ct.CTk):
         sid(self)
 
     def open_camera(self):
+        self.cancel = False
         self.camerabtn_switch(True)
 
         self.cap = cv2.VideoCapture(0)
@@ -63,12 +65,12 @@ class App(ct.CTk):
         imgtk = ImageTk.PhotoImage(image=self.prevImg)
         self.img_holder.imgtk = imgtk
         self.img_holder.configure(image=imgtk)
-        self.img_holder.after(10, self.show_frame)
 
-        # if cv2.waitKey(1) & 0xFF == ord("c"):
-        #     break
+        if not self.cancel:
+            self.img_holder.after(10, self.show_frame)
 
     def capture(self):
+        self.cancel = True
         self.btn_switch(self.cmd_camera, stat=False)
         self.btn_switch(self.cmd_save, stat=True)
         self.btn_switch(self.cmd_retake, stat=True)
@@ -124,7 +126,9 @@ class App(ct.CTk):
         imgtk = ImageTk.PhotoImage(image=self.prevImg)
         self.img_holder.imgtk = imgtk
         self.img_holder.configure(image=imgtk)
-        self.img_holder.after(10, self.show_frame)
+
+        if not self.cancel:
+            self.img_holder.after(10, self.show_frame)
 
 
 if __name__ == "__main__":
