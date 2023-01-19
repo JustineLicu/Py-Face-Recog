@@ -52,6 +52,7 @@ class App(ct.CTk):
     def open_camera(self):
         self.cancel = False
         self.camerabtn_switch(True)
+        self.btn_switch(self.cmd_sid, stat=False)
 
         self.cap = cv2.VideoCapture(0)
 
@@ -87,6 +88,7 @@ class App(ct.CTk):
         self.img_holder.configure(image=None)
         self.txt_imgfname.destroy()
         self.camerabtn_switch(False)
+        self.btn_switch(self.cmd_sid, stat=True)
         self.btn_switch(self.cmd_save, stat=False)
         self.btn_switch(self.cmd_retake, stat=False)
 
